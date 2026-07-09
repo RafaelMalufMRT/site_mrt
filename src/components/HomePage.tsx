@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, FormEvent, MouseEvent } from "react";
+import { blogPosts, upcomingBlogTopics } from "@/lib/blog-data";
 import {
   brand,
   companyResponsibilities,
@@ -1080,6 +1081,183 @@ function TestimonialsSection() {
   );
 }
 
+function BlogSection() {
+  const blogRailRef = useRef<HTMLDivElement>(null);
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState<{
+    type: "idle" | "loading" | "success" | "error";
+    message: string;
+  }>({ type: "idle", message: "" });
+
+  const scrollBlogRail = (direction: -1 | 1) => {
+    const rail = blogRailRef.current;
+
+    if (!rail) {
+      return;
+    }
+
+    rail.scrollBy({
+      left: direction * rail.clientWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const submitNewsletter = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!newsletterEmail.trim()) {
+      setNewsletterStatus({
+        type: "error",
+        message: "Informe seu e-mail para entrar na lista.",
+      });
+      return;
+    }
+
+    setNewsletterStatus({ type: "loading", message: "Salvando..." });
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+      const result = (await response.json()) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(result.message ?? "Não foi possível salvar agora.");
+      }
+
+      setNewsletterEmail("");
+      setNewsletterStatus({
+        type: "success",
+        message: result.message ?? "E-mail cadastrado.",
+      });
+    } catch (error) {
+      setNewsletterStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível salvar agora.",
+      });
+    }
+  };
+
+  return (
+    <section className="section blog-section" id="blog">
+      <div className="container">
+        <SectionHead
+          eyebrow="Blog"
+          title="Últimos posts"
+          text="Conteúdos, bastidores e aprendizados sobre operação, performance e crescimento em marketplaces."
+        />
+
+        <div className="blog-carousel-shell" data-reveal>
+          <button
+            className="blog-arrow blog-arrow-prev"
+            type="button"
+            aria-label="Post anterior"
+            onClick={() => scrollBlogRail(-1)}
+          >
+            {"<"}
+          </button>
+          <div className="blog-side-scroll" ref={blogRailRef}>
+            {blogPosts.map((post) => (
+              <Link
+                className="premium-card blog-card featured-blog-card"
+                href={`/blog/${post.slug}`}
+                key={post.slug}
+              >
+                <span className="blog-kicker">{post.category}</span>
+                <h3>{post.title}</h3>
+                <div className="blog-meta">
+                  <span>{post.readTime}</span>
+                  <span>{post.eyebrow}</span>
+                </div>
+                <span className="btn btn-text">
+                  Ler post <ArrowIcon />
+                </span>
+              </Link>
+            ))}
+
+            <article className="premium-card blog-card blog-card-soon">
+              <span className="blog-kicker">Em breve</span>
+              <h3>Próximos conteúdos</h3>
+              <ul className="blog-topic-list">
+                {upcomingBlogTopics.map((topic) => (
+                  <li key={topic}>{topic}</li>
+                ))}
+              </ul>
+            </article>
+
+            <Link
+              className="premium-card blog-card blog-card-all"
+              href="/blog"
+            >
+              <span className="blog-kicker">Todos os posts</span>
+              <h3>Veja a biblioteca completa</h3>
+              <p>
+                Acesse a listagem do blog para acompanhar os conteúdos
+                publicados pela MRT.
+              </p>
+              <span className="btn btn-text">
+                Ver todos <ArrowIcon />
+              </span>
+            </Link>
+          </div>
+          <button
+            className="blog-arrow blog-arrow-next"
+            type="button"
+            aria-label="Próximo post"
+            onClick={() => scrollBlogRail(1)}
+          >
+            {">"}
+          </button>
+        </div>
+
+        <form
+          className="blog-newsletter"
+          onSubmit={submitNewsletter}
+          data-reveal
+        >
+          <div>
+            <span className="blog-kicker">Newsletter</span>
+            <h3>Quer receber nossos próximos posts?</h3>
+            <p>
+              Cadastre seu e-mail para entrar na lista de conteúdos da MRT.
+            </p>
+          </div>
+          <div className="blog-newsletter-action">
+            <label className="sr-only" htmlFor="newsletter-email">
+              E-mail
+            </label>
+            <input
+              id="newsletter-email"
+              type="email"
+              value={newsletterEmail}
+              onChange={(event) => setNewsletterEmail(event.target.value)}
+              placeholder="seuemail@empresa.com"
+              required
+            />
+            <button
+              className="btn btn-primary"
+              type="submit"
+              disabled={newsletterStatus.type === "loading"}
+            >
+              {newsletterStatus.type === "loading" ? "Salvando..." : "Inscrever"}
+            </button>
+          </div>
+          {newsletterStatus.message ? (
+            <p className={`newsletter-status ${newsletterStatus.type}`}>
+              {newsletterStatus.message}
+            </p>
+          ) : null}
+        </form>
+      </div>
+    </section>
+  );
+}
+
 function FaqSection() {
   return (
     <section className="section" id="faq">
@@ -1541,6 +1719,7 @@ export default function HomePage() {
         <MethodologySection />
         <PricingSimulator />
         <TestimonialsSection />
+        <BlogSection />
         <FaqSection />
         <ContactSection whatsappUrl={whatsappUrl} />
       </main>
