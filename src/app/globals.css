@@ -2153,7 +2153,8 @@ h3 {
   left: var(--x);
   z-index: 3;
   display: grid;
-  width: 124px;
+  box-sizing: border-box;
+  width: 112px;
   min-height: 126px;
   justify-items: center;
   align-content: center;
@@ -2183,12 +2184,20 @@ h3 {
   background: var(--mrt-blue);
 }
 
-.operation-vector-card:nth-of-type(4n + 1) .operation-vector-icon {
+.operation-vector-card.is-orange .operation-vector-icon {
   color: var(--mrt-orange);
 }
 
-.operation-vector-card:nth-of-type(4n + 1) > span {
+.operation-vector-card.is-orange > span {
   background: var(--mrt-orange);
+}
+
+.operation-vector-card.is-blue .operation-vector-icon {
+  color: var(--mrt-blue);
+}
+
+.operation-vector-card.is-blue > span {
+  background: var(--mrt-blue);
 }
 
 .operation-vector-icon {
@@ -2210,14 +2219,13 @@ h3 {
   left: var(--x);
   z-index: 2;
   width: 2px;
-  height: 58px;
+  height: var(--stem-height, 58px);
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(18, 71, 200, 0), rgba(18, 71, 200, 0.44));
   transform: translateX(-50%);
 }
 
 .operation-vector-stem.is-bottom {
-  height: 42px;
   background: linear-gradient(180deg, rgba(18, 71, 200, 0.44), rgba(18, 71, 200, 0));
 }
 

@@ -456,18 +456,18 @@ function MetricsBand() {
 
 function SolutionDiagram() {
   const roadmapLayout = [
-    { x: 8, y: 10, numberX: 8, numberY: 45, side: "top" },
-    { x: 17, y: 69, numberX: 17, numberY: 60, side: "bottom" },
-    { x: 24, y: 10, numberX: 24, numberY: 42, side: "top" },
-    { x: 34, y: 69, numberX: 34, numberY: 60, side: "bottom" },
-    { x: 40, y: 10, numberX: 40, numberY: 45, side: "top" },
-    { x: 51, y: 69, numberX: 51, numberY: 60, side: "bottom" },
-    { x: 57, y: 10, numberX: 57, numberY: 42, side: "top" },
-    { x: 67, y: 69, numberX: 67, numberY: 60, side: "bottom" },
-    { x: 73.5, y: 10, numberX: 73.5, numberY: 45, side: "top" },
-    { x: 83, y: 69, numberX: 83, numberY: 60, side: "bottom" },
-    { x: 88.5, y: 10, numberX: 88.5, numberY: 43, side: "top" },
-    { x: 94, y: 69, numberX: 94, numberY: 60, side: "bottom" },
+    { x: 8, y: 10, numberX: 8, numberY: 48, side: "top" },
+    { x: 15.8, y: 69, numberX: 15.8, numberY: 55, side: "bottom" },
+    { x: 24.8, y: 10, numberX: 24.8, numberY: 63, side: "top" },
+    { x: 33.2, y: 69, numberX: 33.2, numberY: 51, side: "bottom" },
+    { x: 41.8, y: 10, numberX: 41.8, numberY: 53, side: "top" },
+    { x: 50.2, y: 69, numberX: 50.2, numberY: 63, side: "bottom" },
+    { x: 58.8, y: 10, numberX: 58.8, numberY: 51, side: "top" },
+    { x: 67.2, y: 69, numberX: 67.2, numberY: 53, side: "bottom" },
+    { x: 75.5, y: 10, numberX: 75.5, numberY: 63, side: "top" },
+    { x: 82.7, y: 69, numberX: 82.7, numberY: 55, side: "bottom" },
+    { x: 89.6, y: 10, numberX: 89.6, numberY: 48, side: "top" },
+    { x: 95.2, y: 69, numberX: 95.2, numberY: 53, side: "bottom" },
   ];
 
   return (
@@ -535,7 +535,9 @@ function SolutionDiagram() {
               const position = roadmapLayout[index];
               return (
                 <div
-                  className={`operation-vector-card is-${position.side}`}
+                  className={`operation-vector-card is-${position.side} ${
+                    index % 4 < 2 ? "is-orange" : "is-blue"
+                  }`}
                   key={step}
                   style={
                     {
@@ -578,7 +580,14 @@ function SolutionDiagram() {
                 style={
                   {
                     "--x": `${position.x}%`,
-                    "--y": `${position.side === "top" ? 33 : 62}%`,
+                    "--y":
+                      position.side === "top"
+                        ? "32%"
+                        : `${position.numberY}%`,
+                    "--stem-height":
+                      position.side === "top"
+                        ? `${Math.max(position.numberY - 32, 10)}%`
+                        : `${Math.max(position.y - position.numberY, 10)}%`,
                   } as CSSProperties
                 }
                 aria-hidden="true"
