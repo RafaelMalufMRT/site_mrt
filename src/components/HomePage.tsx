@@ -596,10 +596,11 @@ function OrbitDiagram() {
     <div className="orbit-diagram orbit-diagram-image" data-reveal>
       <Image
         className="venn-image"
-        src="/mrt-venn-diagram-transparent.png"
+        src="/mrt-venn-diagram-optimized.webp"
         alt="Diagrama de Venn com MRT na interseção entre agência, consultoria e equipe interna"
         width={1503}
         height={1047}
+        unoptimized
       />
     </div>
   );
@@ -793,40 +794,14 @@ function ResultsSection() {
 function SalesEngineVisual() {
   return (
     <div className="sales-engine-visual" aria-hidden="true">
-      <div className="engine-screen">
-        <div className="screen-top">
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className="screen-chart">
-          <svg viewBox="0 0 210 92">
-            <path
-              d="M8 76 C38 72 45 56 71 54 C96 52 101 34 127 36 C158 38 164 18 202 15"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeWidth="7"
-            />
-            <circle cx="202" cy="15" r="7" fill="currentColor" />
-          </svg>
-        </div>
-        <div className="screen-metrics">
-          <span>Vendas</span>
-          <span>Mensagens</span>
-          <span>Anúncios</span>
-        </div>
-      </div>
-      <div className="engine-block">
-        <div className="gear gear-one" />
-        <div className="gear gear-two" />
-        <div className="engine-core">IA</div>
-      </div>
-      <div className="engine-lines">
-        <span />
-        <span />
-        <span />
-      </div>
+      <Image
+        className="sales-engine-motor"
+        src="/mrt-sales-engine-motor-cutout.png"
+        alt=""
+        width={1070}
+        height={862}
+        unoptimized
+      />
     </div>
   );
 }
@@ -925,41 +900,36 @@ function MethodologySection() {
 function PricingSimulator() {
   const [skuCount, setSkuCount] = useState(50);
   const [channelCount, setChannelCount] = useState(5);
-  const skuMin = 10;
+  const skuMin = 5;
   const skuMax = 100;
   const channelMin = 1;
   const channelMax = 10;
   const skuMarks = [
-    { value: 10, label: "10" },
-    { value: 25, label: "25" },
-    { value: 50, label: "50" },
-    { value: 75, label: "75" },
+    { value: 5, label: "5" },
     { value: 100, label: "100+" },
   ];
   const channelMarks = [
     { value: 1, label: "1" },
-    { value: 2, label: "2" },
-    { value: 3, label: "3" },
-    { value: 4, label: "4" },
-    { value: 5, label: "5" },
-    { value: 6, label: "6" },
-    { value: 7, label: "7" },
-    { value: 8, label: "8" },
-    { value: 9, label: "9" },
     { value: 10, label: "10+" },
   ];
   const skuProgress = ((skuCount - skuMin) / (skuMax - skuMin)) * 100;
   const channelProgress =
     ((channelCount - channelMin) / (channelMax - channelMin)) * 100;
-  const planSkuCount = skuCount >= 100 ? 101 : skuCount;
+  const roundedSkuCount =
+    skuCount >= 100 ? 100 : Math.max(skuMin, Math.ceil(skuCount / 5) * 5);
+  const planSkuCount = roundedSkuCount >= 100 ? 101 : roundedSkuCount;
+  const planChannelCount =
+    channelCount >= 10 ? 11 : Math.max(channelMin, Math.ceil(channelCount));
   const plan =
     pricingPlans.find(
       (item) =>
-        planSkuCount <= item.skuLimit && channelCount <= item.channelLimit,
+        planSkuCount <= item.skuLimit &&
+        planChannelCount <= item.channelLimit,
     ) ?? pricingPlans[pricingPlans.length - 1];
-  const skuDisplay = skuCount >= 100 ? "100+ SKUs" : `${skuCount} SKUs`;
+  const skuDisplay =
+    roundedSkuCount >= 100 ? "100+ SKUs" : `${roundedSkuCount} SKUs`;
   const channelDisplay =
-    channelCount >= 10 ? "10+ canais" : `${channelCount} canais`;
+    channelCount >= 10 ? "10+ canais" : `${planChannelCount} canais`;
 
   const rangeStyle = (progress: number) =>
     ({ "--range-progress": `${progress}%` }) as CSSProperties;
@@ -986,7 +956,7 @@ function PricingSimulator() {
                 type="range"
                 min={skuMin}
                 max={skuMax}
-                step="10"
+                step="0.01"
                 value={skuCount}
                 style={rangeStyle(skuProgress)}
                 aria-valuetext={skuDisplay}
@@ -1015,7 +985,7 @@ function PricingSimulator() {
                 type="range"
                 min={channelMin}
                 max={channelMax}
-                step="1"
+                step="0.01"
                 value={channelCount}
                 style={rangeStyle(channelProgress)}
                 aria-valuetext={channelDisplay}
@@ -1054,14 +1024,14 @@ function PricingSimulator() {
               Solicitar diagnóstico desse cenário <ArrowIcon />
             </a>
             <div className="plan-notes">
-              <p>
-                Valores ilustrativos. O investimento final depende do
-                diagnóstico, complexidade operacional, marketplaces escolhidos e
-                estágio atual da empresa.
+              <p className="plan-note-primary">
+                O gerenciamento contínuo começa apenas após a conclusão e
+                aprovação formal da implantação.
               </p>
               <p>
-                O gerenciamento contínuo começa após a conclusão e aprovação
-                formal da implantação.
+                O investimento final depende do diagnóstico, complexidade
+                operacional, marketplaces escolhidos e estágio atual da empresa.
+                Valores podem ser diferentes após diagnóstico.
               </p>
             </div>
           </div>

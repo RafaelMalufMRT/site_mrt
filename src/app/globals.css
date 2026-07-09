@@ -1289,6 +1289,19 @@ h3 {
   line-height: 1.55;
 }
 
+.plan-notes p {
+  margin: 0;
+}
+
+.plan-notes .plan-note-primary {
+  border: 1px solid rgba(233, 154, 0, 0.22);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(233, 154, 0, 0.1);
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 700;
+}
+
 .cases-section {
   background: #ffffff;
 }
@@ -2691,153 +2704,32 @@ h3 {
 
 .sales-engine-visual {
   position: relative;
-  min-height: 280px;
+  display: grid;
+  min-height: 245px;
+  place-items: center;
   border: 0;
   background: transparent;
   overflow: visible;
+  isolation: isolate;
 }
 
 .sales-engine-visual::before {
-  content: none;
-}
-
-.engine-screen {
   position: absolute;
-  top: 22px;
-  right: 36px;
-  width: min(72%, 380px);
-  border: 1px solid rgba(18, 71, 200, 0.2);
-  border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 22px 60px rgba(13, 27, 54, 0.1);
-  overflow: hidden;
-}
-
-.screen-top {
-  display: flex;
-  gap: 7px;
-  padding: 13px;
-  border-bottom: 1px solid var(--mrt-line);
-  background: #fbfcff;
-}
-
-.screen-top span {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: var(--mrt-line-strong);
-}
-
-.screen-chart {
-  padding: 22px 22px 8px;
-  color: var(--mrt-blue);
-}
-
-.screen-chart svg {
-  width: 100%;
-  height: auto;
-}
-
-.screen-metrics {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  padding: 12px;
-}
-
-.screen-metrics span {
-  border-radius: 8px;
-  background: var(--mrt-blue-soft);
-  color: var(--mrt-blue);
-  padding: 8px;
-  font-size: 0.72rem;
-  font-weight: 760;
-  text-align: center;
-}
-
-.engine-block {
-  position: absolute;
-  left: 34px;
-  bottom: 24px;
-  width: 180px;
-  height: 138px;
-  border: 1px solid rgba(233, 154, 0, 0.36);
-  border-radius: 8px;
+  inset: 12% 4% 4%;
+  z-index: -1;
   background:
-    linear-gradient(145deg, var(--mrt-orange), #f6b22f),
-    var(--mrt-orange);
-  box-shadow: 0 24px 60px rgba(233, 154, 0, 0.18);
-}
-
-.engine-core {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  display: grid;
-  width: 54px;
-  height: 54px;
-  place-items: center;
-  border-radius: 999px;
-  background: var(--mrt-ink);
-  color: #ffffff;
-  font-weight: 840;
-}
-
-.gear {
-  position: absolute;
-  border: 8px solid rgba(255, 255, 255, 0.84);
-  border-radius: 999px;
-}
-
-.gear::before,
-.gear::after {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.84);
+    radial-gradient(circle at 66% 44%, rgba(233, 154, 0, 0.28), transparent 32%),
+    radial-gradient(circle at 46% 58%, rgba(18, 71, 200, 0.2), transparent 46%);
   content: "";
-  transform: translate(-50%, -50%);
+  filter: blur(8px);
 }
 
-.gear-one {
-  top: 24px;
-  left: 24px;
-  width: 64px;
-  height: 64px;
-}
-
-.gear-two {
-  top: 54px;
-  left: 82px;
-  width: 42px;
-  height: 42px;
-  border-width: 6px;
-}
-
-.engine-lines {
-  position: absolute;
-  left: 180px;
-  bottom: 94px;
-  display: grid;
-  gap: 10px;
-}
-
-.engine-lines span {
-  width: 120px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(18, 71, 200, 0.18);
-}
-
-.engine-lines span:nth-child(2) {
-  width: 92px;
-  background: rgba(233, 154, 0, 0.3);
-}
-
-.engine-lines span:nth-child(3) {
-  width: 142px;
+.sales-engine-motor {
+  display: block;
+  width: min(100%, 460px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 26px 36px rgba(13, 27, 54, 0.18));
 }
 
 .range-control {
@@ -3294,17 +3186,6 @@ h3 {
   .sales-engine-visual {
     min-height: 330px;
   }
-
-  .engine-screen {
-    top: 22px;
-    right: 0;
-    left: auto;
-    width: 82%;
-  }
-
-  .engine-block {
-    left: 0;
-  }
 }
 
 @media (max-width: 560px) {
@@ -3405,22 +3286,7 @@ h3 {
   }
 
   .sales-engine-visual {
-    min-height: 300px;
-  }
-
-  .engine-screen {
-    left: auto;
-    right: 0;
-    width: 88%;
-  }
-
-  .engine-block {
-    width: 152px;
-    height: 118px;
-  }
-
-  .engine-lines {
-    left: 132px;
+    min-height: 260px;
   }
 
   .result-facts {
