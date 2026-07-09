@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { resultCases } from "@/lib/site-data";
@@ -237,11 +238,25 @@ export default async function CaseDetailPage({ params }: PageProps) {
 
   return (
     <main className="case-detail">
-      <section className="case-detail-hero">
-        <div className="container">
-          <Link className="back-link" href="/#resultados">
+      <header className="case-topbar">
+        <div className="container case-topbar-inner">
+          <Link className="case-brand-link" href="/#top" aria-label="MRT Marketplace">
+            <Image
+              className="case-brand-mark"
+              src="/mrt-logo-header-transparent.png"
+              alt="MRT Marketplace"
+              width={160}
+              height={28}
+              priority
+            />
+          </Link>
+          <Link className="case-back-link" href="/#resultados">
             Voltar para resultados
           </Link>
+        </div>
+      </header>
+      <section className="case-detail-hero">
+        <div className="container">
           <span className="eyebrow">{caseItem.sector}</span>
           <h1>{caseItem.headline}</h1>
           <p className="lead">

@@ -239,10 +239,10 @@ function Header({ whatsappUrl }: { whatsappUrl: string }) {
         <a className="brand-link" href="#top" aria-label="MRT Marketplace">
           <Image
             className="brand-mark"
-            src="/mrt-logo.png"
+            src="/mrt-logo-header-transparent.png"
             alt="MRT Marketplace"
             width={160}
-            height={25}
+            height={28}
             fetchPriority="high"
             loading="eager"
             preload

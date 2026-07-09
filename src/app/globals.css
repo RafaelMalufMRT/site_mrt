@@ -1763,8 +1763,60 @@ h3 {
   background: #ffffff;
 }
 
+.case-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid rgba(207, 218, 232, 0.82);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.case-topbar-inner {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.case-brand-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.case-brand-mark {
+  display: block;
+  width: 160px;
+  height: auto;
+}
+
+.case-back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(18, 71, 200, 0.18);
+  border-radius: 999px;
+  background: rgba(18, 71, 200, 0.06);
+  padding: 10px 14px;
+  color: var(--mrt-blue);
+  font-size: 0.9rem;
+  font-weight: 760;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.case-back-link:hover,
+.case-back-link:focus-visible {
+  border-color: rgba(233, 154, 0, 0.48);
+  background: rgba(233, 154, 0, 0.1);
+  color: var(--mrt-orange-dark);
+}
+
 .case-detail-hero {
-  padding: 96px 0 88px;
+  padding: 82px 0 88px;
   border-bottom: 1px solid var(--mrt-line);
   background:
     radial-gradient(circle at 78% 16%, rgba(18, 71, 200, 0.12), transparent 32%),
@@ -3496,11 +3548,24 @@ h3 {
   }
 
   .case-detail-hero {
-    padding: 76px 0 72px;
+    padding: 58px 0 72px;
   }
 
   .case-detail-hero h1 {
     font-size: 2.55rem;
+  }
+
+  .case-topbar-inner {
+    min-height: 64px;
+  }
+
+  .case-brand-mark {
+    width: 132px;
+  }
+
+  .case-back-link {
+    padding: 9px 11px;
+    font-size: 0.78rem;
   }
 
   .case-proof-section {
