@@ -456,18 +456,18 @@ function MetricsBand() {
 
 function SolutionDiagram() {
   const roadmapLayout = [
-    { x: 8, y: 10, numberX: 8, numberY: 48, side: "top" },
-    { x: 15.8, y: 69, numberX: 15.8, numberY: 55, side: "bottom" },
-    { x: 24.8, y: 10, numberX: 24.8, numberY: 63, side: "top" },
-    { x: 33.2, y: 69, numberX: 33.2, numberY: 51, side: "bottom" },
-    { x: 41.8, y: 10, numberX: 41.8, numberY: 53, side: "top" },
-    { x: 50.2, y: 69, numberX: 50.2, numberY: 63, side: "bottom" },
-    { x: 58.8, y: 10, numberX: 58.8, numberY: 51, side: "top" },
-    { x: 67.2, y: 69, numberX: 67.2, numberY: 53, side: "bottom" },
-    { x: 75.5, y: 10, numberX: 75.5, numberY: 63, side: "top" },
-    { x: 82.7, y: 69, numberX: 82.7, numberY: 55, side: "bottom" },
-    { x: 89.6, y: 10, numberX: 89.6, numberY: 48, side: "top" },
-    { x: 95.2, y: 69, numberX: 95.2, numberY: 53, side: "bottom" },
+    { x: 8, y: 10, numberX: 8, numberY: 49.1, side: "top" },
+    { x: 15.6, y: 69, numberX: 15.6, numberY: 54.4, side: "bottom" },
+    { x: 23.3, y: 10, numberX: 23.3, numberY: 62, side: "top" },
+    { x: 30.9, y: 69, numberX: 30.9, numberY: 52.8, side: "bottom" },
+    { x: 38.5, y: 10, numberX: 38.5, numberY: 49.5, side: "top" },
+    { x: 46.2, y: 69, numberX: 46.2, numberY: 60.4, side: "bottom" },
+    { x: 53.8, y: 10, numberX: 53.8, numberY: 59.4, side: "top" },
+    { x: 61.5, y: 69, numberX: 61.5, numberY: 49, side: "bottom" },
+    { x: 69.1, y: 10, numberX: 69.1, numberY: 54.3, side: "top" },
+    { x: 76.7, y: 69, numberX: 76.7, numberY: 62, side: "bottom" },
+    { x: 84.4, y: 10, numberX: 84.4, numberY: 52.9, side: "top" },
+    { x: 92, y: 69, numberX: 92, numberY: 49.3, side: "bottom" },
   ];
 
   return (
@@ -594,6 +594,27 @@ function SolutionDiagram() {
               />
             ))}
           </div>
+        </div>
+        <div
+          className="operation-mobile-timeline"
+          aria-label="Fluxo operacional de ponta a ponta"
+        >
+          {operationRouteSteps.map((step, index) => (
+            <div
+              className={`operation-mobile-step ${
+                index % 4 < 2 ? "is-orange" : "is-blue"
+              }`}
+              key={`mobile-${step}`}
+            >
+              <span className="operation-mobile-number">{index + 1}</span>
+              <div className="operation-mobile-card">
+                <div className="operation-vector-icon">
+                  <OperationStepIcon index={index} />
+                </div>
+                <strong>{step}</strong>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1021,54 +1042,6 @@ function PricingSimulator() {
   );
 }
 
-function CasesSection() {
-  return (
-    <section className="section cases-section" id="cases">
-      <div className="container">
-        <SectionHead
-          eyebrow="Cases"
-          title="Cases de operações que saíram do planejamento para escala."
-          text="Estruturamos operações em diferentes segmentos, sempre com foco em implantação, rotina, dados e crescimento sustentável."
-        />
-
-        <div className="case-grid">
-          {resultCases.map((item) => (
-            <article
-              className="premium-card case-card"
-              key={item.slug}
-              data-reveal
-            >
-              <span className="case-tag">{item.sector}</span>
-              <h3>{item.headline}</h3>
-              <div className="case-list">
-                <div>
-                  <span>Problema inicial</span>
-                  <strong>{item.problem}</strong>
-                </div>
-                <div>
-                  <span>Solução aplicada</span>
-                  <strong>{item.solution}</strong>
-                </div>
-                <div>
-                  <span>Tempo até tração</span>
-                  <strong>{item.tractionTime}</strong>
-                </div>
-                <div>
-                  <span>Resultado principal</span>
-                  <strong>{item.caseResult}</strong>
-                </div>
-              </div>
-              <Link className="btn btn-text" href={`/cases/${item.slug}`}>
-                Ver case <ArrowIcon />
-              </Link>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function TestimonialsSection() {
   return (
     <section className="section testimonials-section">
@@ -1414,7 +1387,6 @@ function Footer({ whatsappUrl }: { whatsappUrl: string }) {
                 </a>
               ))}
               <a href="#contato">Contato</a>
-              <Link href="/cases">Todos os cases</Link>
             </div>
           </div>
           <div className="footer-column">
@@ -1568,7 +1540,6 @@ export default function HomePage() {
         <ResultsSection />
         <MethodologySection />
         <PricingSimulator />
-        <CasesSection />
         <TestimonialsSection />
         <FaqSection />
         <ContactSection whatsappUrl={whatsappUrl} />

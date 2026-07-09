@@ -15,7 +15,6 @@ export const navLinks = [
   { label: "Resultados", href: "#resultados" },
   { label: "Metodologia", href: "#metodologia" },
   { label: "Investimento", href: "#investimento" },
-  { label: "Cases", href: "#cases" },
   { label: "FAQ", href: "#faq" },
 ];
 
