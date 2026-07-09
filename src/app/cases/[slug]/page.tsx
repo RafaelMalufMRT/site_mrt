@@ -260,8 +260,8 @@ export default async function CaseDetailPage({ params }: PageProps) {
           <span className="eyebrow">{caseItem.sector}</span>
           <h1>{caseItem.headline}</h1>
           <p className="lead">
-            Uma visão inicial de performance para depois receber métricas reais,
-            contexto comercial, depoimentos e a narrativa completa da operação.
+            Uma visão de performance construída a partir da estruturação da
+            operação, evolução comercial e rotina de indicadores.
           </p>
         </div>
       </section>

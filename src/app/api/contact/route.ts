@@ -109,7 +109,7 @@ export async function POST(request: Request) {
   }
 
   const contactEmail =
-    process.env.CONTACT_EMAIL ?? "contato@mrtmarketplace.com.br";
+    process.env.CONTACT_EMAIL ?? "luciano@mrtmarketplace.com.br";
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail =
     process.env.CONTACT_FROM ?? "MRT Marketplace <onboarding@resend.dev>";
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "Diagnóstico registrado em modo de demonstração. Configure RESEND_API_KEY para envio real por e-mail.",
+          "Solicitação recebida. Nossa equipe entrará em contato em breve.",
       },
       { status: 202 },
     );

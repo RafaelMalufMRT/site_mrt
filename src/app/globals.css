@@ -1404,18 +1404,6 @@ h3 {
   margin-top: 24px;
 }
 
-.avatar {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid rgba(18, 71, 200, 0.22);
-  border-radius: 999px;
-  background: var(--mrt-blue-soft);
-  color: var(--mrt-blue);
-  font-weight: 780;
-}
-
 .person strong,
 .person span {
   display: block;
@@ -3344,13 +3332,17 @@ h3 {
 .tech-strip h3 {
   max-width: 520px;
   color: #ffffff;
+  font-size: clamp(2.25rem, 4.8vw, 4.2rem);
+  line-height: 0.96;
   text-shadow: 0 12px 28px rgba(95, 57, 0, 0.12);
 }
 
 .tech-strip p {
   max-width: 520px;
   color: rgba(13, 27, 54, 0.82);
+  font-size: 1.12rem;
   font-weight: 620;
+  line-height: 1.62;
 }
 
 .tech-strip .lane-kicker {
@@ -3359,7 +3351,7 @@ h3 {
   padding: 9px 14px;
   background: rgba(255, 255, 255, 0.9);
   color: var(--mrt-blue);
-  font-size: 0.9rem;
+  font-size: 1rem;
   letter-spacing: 0;
   box-shadow: 0 14px 28px rgba(13, 27, 54, 0.08);
 }
@@ -3503,12 +3495,6 @@ h3 {
 
 .quote-mark {
   color: var(--mrt-orange);
-}
-
-.avatar {
-  border-color: rgba(233, 154, 0, 0.3);
-  background: var(--mrt-orange-soft);
-  color: var(--mrt-orange-dark);
 }
 
 .faq-item[open] summary {

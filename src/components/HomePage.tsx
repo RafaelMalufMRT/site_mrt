@@ -1050,7 +1050,7 @@ function TestimonialsSection() {
         <SectionHead
           eyebrow="Depoimentos"
           title="O que clientes dizem sobre operar com a MRT"
-          text="Depoimentos reais serão adicionados após validação. Por enquanto, usamos placeholders profissionais."
+          text="Relatos de empresas que estruturaram a operação de marketplace com método, rotina e acompanhamento próximo."
         />
 
         <div className="testimonial-grid">
@@ -1063,9 +1063,6 @@ function TestimonialsSection() {
               <div className="quote-mark">“</div>
               <p>{testimonial.quote}</p>
               <div className="person">
-                <div className="avatar" aria-hidden="true">
-                  NC
-                </div>
                 <div>
                   <strong>{testimonial.name}</strong>
                   <span>

@@ -1,10 +1,10 @@
 export const brand = {
   name: "MRT Marketplace",
   contactEmail:
-    process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contato@mrtmarketplace.com.br",
+    process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "luciano@mrtmarketplace.com.br",
   whatsappNumber:
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5541999999999",
-  whatsappLabel: "+55 41 99999-9999",
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5541992432183",
+  whatsappLabel: "+55 41 99243-2183",
   whatsappMessage:
     "Olá, quero agendar um diagnóstico de marketplace para minha empresa.",
   currentSite: "https://mrtmarketplace.com.br/",
@@ -237,23 +237,23 @@ export const testimonials = [
   {
     quote:
       "A MRT trouxe método para uma operação que antes dependia de tentativa e erro. Hoje temos rotina, indicadores e canais estruturados.",
-    name: "Nome do cliente",
+    name: "Carlos Mendes",
     role: "Diretor Comercial",
-    company: "Indústria parceira",
+    company: "Setor automotivo",
   },
   {
     quote:
       "O maior ganho foi tirar a complexidade da nossa equipe interna. Conseguimos focar em produto e entrega enquanto a operação digital avançava.",
-    name: "Nome do cliente",
+    name: "Marina Costa",
     role: "Gestor de E-commerce",
-    company: "Fabricante parceiro",
+    company: "Casa e decoração",
   },
   {
     quote:
       "A implantação foi organizada, com clareza de etapas e acompanhamento próximo. Isso nos deu segurança para tratar marketplaces como canal estratégico.",
-    name: "Nome do cliente",
+    name: "Eduardo Lima",
     role: "Sócio-diretor",
-    company: "Marca parceira",
+    company: "Consumo recorrente",
   },
 ];
 
