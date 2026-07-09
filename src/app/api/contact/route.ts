@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
 type ContactPayload = {
   name?: string;
   company?: string;
@@ -124,22 +126,29 @@ export async function POST(request: Request) {
     );
   }
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [contactEmail],
-      reply_to: payload.email,
-      subject: `Novo diagnóstico MRT - ${payload.company}`,
-      html: buildEmailHtml(payload),
-    }),
-  });
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [contactEmail],
+        reply_to: payload.email,
+        subject: `Novo diagnóstico MRT - ${payload.company}`,
+        html: buildEmailHtml(payload),
+      }),
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return NextResponse.json(
+        { message: "Não foi possível enviar o e-mail agora." },
+        { status: 502 },
+      );
+    }
+  } catch {
     return NextResponse.json(
       { message: "Não foi possível enviar o e-mail agora." },
       { status: 502 },

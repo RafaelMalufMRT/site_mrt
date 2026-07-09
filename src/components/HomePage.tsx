@@ -1331,7 +1331,10 @@ function ContactSection({ whatsappUrl }: { whatsappUrl: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const result = (await response.json()) as { message?: string };
+      const contentType = response.headers.get("content-type") ?? "";
+      const result = contentType.includes("application/json")
+        ? ((await response.json()) as { message?: string })
+        : { message: "Não foi possível acessar o envio agora." };
 
       if (!response.ok) {
         throw new Error(result.message ?? "Não foi possível enviar agora.");
