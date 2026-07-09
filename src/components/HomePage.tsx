@@ -813,35 +813,6 @@ function MethodRoad() {
 
   return (
     <div className="method-road" data-reveal>
-      <div className="method-track">
-        <svg viewBox="0 0 1120 170" aria-hidden="true">
-          <path
-            className="method-road-shadow"
-            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
-          />
-          <path
-            className="method-road-body"
-            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
-          />
-          <path
-            className="method-road-dash"
-            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
-          />
-        </svg>
-        {methodologyPhases.map((phase, index) => (
-          <button
-            type="button"
-            className={`method-track-pin method-track-pin-${index + 1} ${
-              index === activePhaseIndex ? "is-live" : ""
-            }`}
-            key={phase.name}
-            aria-label={`Selecionar fase ${phase.name}`}
-            onClick={() => setActivePhaseIndex(index)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
       <div className="method-road-cards">
         {methodologyPhases.map((phase, index) => (
           <article
