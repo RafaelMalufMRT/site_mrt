@@ -67,7 +67,22 @@ export const mrtResponsibilities = [
   "Emissão de notas e etiquetas",
   "SAC",
   "Indicadores",
-  "Crescimento",
+  "Growth",
+];
+
+export const operationRouteSteps = [
+  "Diagnóstico",
+  "Contas e integrações",
+  "Catálogo e anúncios",
+  "Imagens e SEO/GEO",
+  "Precificação",
+  "Campanhas e afiliados",
+  "Notas e etiquetas",
+  "SAC e reputação",
+  "Dashboard e indicadores",
+  "Lucro líquido e performance",
+  "Otimização com IA",
+  "Growth",
 ];
 
 export const comparisonModels = [

@@ -3,10 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import type { FormEvent, MouseEvent } from "react";
+import type { CSSProperties, FormEvent, MouseEvent } from "react";
 import {
   brand,
-  channelOptions,
   companyResponsibilities,
   comparisonModels,
   credentials,
@@ -16,11 +15,10 @@ import {
   metrics,
   mrtResponsibilities,
   navLinks,
+  operationRouteSteps,
   pricingPlans,
   problemCards,
   resultCases,
-  skuOptions,
-  technologyCards,
   testimonials,
 } from "@/lib/site-data";
 
@@ -66,6 +64,120 @@ function ArrowIcon() {
         strokeLinejoin="round"
         strokeWidth="2"
       />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="m6.5 12.4 3.4 3.4 7.6-8.1"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2.4"
+      />
+    </svg>
+  );
+}
+
+function ProblemIcon({ index }: { index: number }) {
+  const icons = [
+    "M7 7h10v10H7z M10 10h4 M10 14h4",
+    "M7 17V9l5-3 5 3v8 M9.5 17v-5h5v5",
+    "M6 16l5.5-8 3.5 5 2-2 2 5 M8 16h10",
+    "M7 7h10v7H7z M9 17h6 M12 14v3",
+  ];
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d={icons[index % icons.length]}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+    </svg>
+  );
+}
+
+function OperationStepIcon({ index }: { index: number }) {
+  const icons = [
+    <g key="diagnostic">
+      <circle cx="10.5" cy="10.5" r="5.5" />
+      <path d="m15 15 4 4M8.5 12.5v-3M10.5 12.5v-5M12.5 12.5v-2" />
+    </g>,
+    <g key="integration">
+      <path d="M9.5 8.5 8 7a3.2 3.2 0 0 0-4.5 4.5l2.1 2.1a3.2 3.2 0 0 0 4.5 0l.7-.7" />
+      <path d="m14.5 15.5 1.5 1.5a3.2 3.2 0 0 0 4.5-4.5l-2.1-2.1a3.2 3.2 0 0 0-4.5 0l-.7.7" />
+      <path d="m8.7 15.3 6.6-6.6" />
+    </g>,
+    <g key="catalog">
+      <circle cx="12" cy="5.2" r="2.4" />
+      <circle cx="5.5" cy="16.5" r="2.4" />
+      <circle cx="18.5" cy="16.5" r="2.4" />
+      <path d="M12 7.6v3.3M7.7 15.2l3.2-3M16.3 15.2l-3.2-3" />
+    </g>,
+    <g key="image">
+      <rect x="4" y="5.5" width="16" height="13" rx="2" />
+      <path d="m6.5 16 4-4 3 3 2-2 2.5 3M15.5 9.5h.1" />
+    </g>,
+    <g key="price">
+      <path d="m4.5 12 7.8-7.8h5.2v5.2L9.7 17.2z" />
+      <circle cx="15.3" cy="6.7" r="1.2" />
+      <path d="M9.5 12.5c1.6 1.2 4.1.8 4.1-.9 0-1.5-1.7-1.6-3-2.1-1.1-.4-1.4-1.9.2-2.4 1-.3 1.9 0 2.6.4M11.8 6.5v7" />
+    </g>,
+    <g key="campaign">
+      <path d="M4 13h3l7 4V7l-7 4H4zM17 9.5l2-1.2M17 14.5l2 1.2M18 12h2" />
+      <path d="M7 13v4" />
+    </g>,
+    <g key="document">
+      <path d="M6.5 3.8h7l4 4v12.4h-11zM13.5 3.8v4h4" />
+      <path d="M9 11h5.5M9 14h5.5M9 17h3" />
+    </g>,
+    <g key="support">
+      <path d="M5 6.5h14v9H9l-4 3z" />
+      <circle cx="16.4" cy="16.4" r="3.1" />
+      <path d="m16.4 14.9.5 1 1.1.2-.8.8.2 1.1-1-.5-1 .5.2-1.1-.8-.8 1.1-.2z" />
+    </g>,
+    <g key="dashboard">
+      <rect x="4" y="5" width="16" height="14" rx="2" />
+      <path d="M7.5 15v-3M12 15V9M16.5 15v-5" />
+      <path d="M7 8h4" />
+    </g>,
+    <g key="profit">
+      <path d="M4 17h16M6 15v-2M10 15v-5M14 15V8M18 15V6" />
+      <path d="m5 11 4-4 4 2 5-5" />
+      <circle cx="17" cy="15.5" r="3.1" />
+      <path d="M17 13.9v3.2M15.9 14.7c.6-.6 2.2-.5 2.2.4 0 1.1-2.1.6-2.1 1.6 0 .8 1.5 1 2.3.4" />
+    </g>,
+    <g key="ai">
+      <path d="M9.5 5.2a3 3 0 0 0-3 3v7.2a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V8.2a3 3 0 0 0-3-3z" />
+      <path d="M9.5 9.5h5M9.5 12h5M9.5 14.5h3" />
+      <path d="M17.5 8h2M17.5 12h2M17.5 16h2M4.5 8h2M4.5 12h2M4.5 16h2" />
+    </g>,
+    <g key="rocket">
+      <path d="M13.5 4.5c3.4.3 5.2 2.1 5.5 5.5l-5.6 5.6-5-5z" />
+      <path d="m8.4 10.6-3.1.8-1.2 3.3 3.8-.8M13.4 15.6l-.8 3.8-3.3 1.2.8-3.1" />
+      <circle cx="14.9" cy="8.6" r="1.4" />
+    </g>,
+  ];
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.7"
+      >
+        {icons[index % icons.length]}
+      </g>
     </svg>
   );
 }
@@ -190,10 +302,10 @@ function Header({ whatsappUrl }: { whatsappUrl: string }) {
 
 function HeroDashboard() {
   const statuses = [
-    "Anúncios otimizados",
-    "Campanhas ativas",
-    "SAC monitorado",
-    "SEO em revisão",
+    { label: "Anúncios otimizados", tone: "healthy" },
+    { label: "Campanhas ativas", tone: "healthy" },
+    { label: "SAC monitorado", tone: "healthy" },
+    { label: "SEO em revisão", tone: "healthy" },
   ];
   const marketplaces = [
     "Mercado Livre",
@@ -268,18 +380,29 @@ function HeroDashboard() {
         </div>
 
         <div className="pipeline" aria-label="Pipeline MRT">
-          {["Ignition", "Traction", "Ramp Up", "Growth"].map((step) => (
-            <div className="pipeline-step" key={step}>
-              {step}
+          {[
+            { label: "Ignition", state: "done" },
+            { label: "Traction", state: "done" },
+            { label: "Ramp Up", state: "done" },
+            { label: "Growth", state: "active" },
+          ].map((step) => (
+            <div
+              className={`pipeline-step pipeline-step-${step.state}`}
+              key={step.label}
+            >
+              <span>{step.label}</span>
+              <span className="pipeline-state" aria-hidden="true">
+                {step.state === "done" ? <CheckIcon /> : null}
+              </span>
             </div>
           ))}
         </div>
 
         <div className="status-grid">
           {statuses.map((status) => (
-            <div className="status-item" key={status}>
+            <div className={`status-item status-${status.tone}`} key={status.label}>
               <span className="status-dot" />
-              {status}
+              {status.label}
             </div>
           ))}
         </div>
@@ -332,36 +455,152 @@ function MetricsBand() {
 }
 
 function SolutionDiagram() {
+  const roadmapLayout = [
+    { x: 8, y: 10, numberX: 8, numberY: 45, side: "top" },
+    { x: 17, y: 69, numberX: 17, numberY: 60, side: "bottom" },
+    { x: 24, y: 10, numberX: 24, numberY: 42, side: "top" },
+    { x: 34, y: 69, numberX: 34, numberY: 60, side: "bottom" },
+    { x: 40, y: 10, numberX: 40, numberY: 45, side: "top" },
+    { x: 51, y: 69, numberX: 51, numberY: 60, side: "bottom" },
+    { x: 57, y: 10, numberX: 57, numberY: 42, side: "top" },
+    { x: 67, y: 69, numberX: 67, numberY: 60, side: "bottom" },
+    { x: 73.5, y: 10, numberX: 73.5, numberY: 45, side: "top" },
+    { x: 83, y: 69, numberX: 83, numberY: 60, side: "bottom" },
+    { x: 88.5, y: 10, numberX: 88.5, numberY: 43, side: "top" },
+    { x: 94, y: 69, numberX: 94, numberY: 60, side: "bottom" },
+  ];
+
   return (
-    <div className="solution-grid" data-reveal>
-      <div className="solution-column">
-        <h3>Sua empresa</h3>
-        <ul className="responsibility-list">
-          {companyResponsibilities.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="solution-core">
-        <div className="core-ring" aria-hidden="true">
-          <span />
+    <div className="solution-system" data-reveal>
+      <div className="solution-owner-grid">
+        <div className="solution-lane-card company">
+          <div>
+            <span className="lane-kicker">Sua empresa</span>
+            <h3>Produto e entrega</h3>
+          </div>
+          <ul className="responsibility-list compact">
+            {companyResponsibilities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
-        <h3>Operação de Marketplace</h3>
-        <p>
-          O núcleo operacional conecta produto, canais, rotina comercial,
-          indicadores e execução diária.
-        </p>
+
+        <div className="solution-lane-card mrt">
+          <div>
+            <span className="lane-kicker">MRT Marketplace</span>
+            <h3>Operação e crescimento</h3>
+          </div>
+          <ul className="responsibility-list compact">
+            {mrtResponsibilities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      <div className="solution-column">
-        <h3>MRT Marketplace</h3>
-        <ul className="responsibility-list">
-          {mrtResponsibilities.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+      <div className="operation-road-card">
+        <div className="operation-road-head">
+          <span className="lane-kicker">Fluxo operacional</span>
+          <h3>Operação de ponta a ponta</h3>
+        </div>
+        <div className="operation-vector-scroll">
+          <div
+            className="operation-vector-map"
+            aria-label="Roadmap operacional de ponta a ponta"
+          >
+            <svg
+              className="operation-vector-road"
+              viewBox="0 0 1120 190"
+              aria-hidden="true"
+            >
+              <path
+                className="operation-road-shadow"
+                d="M35 105 C85 55 130 55 180 105 S280 155 330 105 S430 55 480 105 S580 155 630 105 S730 55 780 105 S880 155 930 105 S1030 55 1088 105"
+              />
+              <path
+                className="operation-road-outer"
+                d="M35 105 C85 55 130 55 180 105 S280 155 330 105 S430 55 480 105 S580 155 630 105 S730 55 780 105 S880 155 930 105 S1030 55 1088 105"
+              />
+              <path
+                className="operation-road-body"
+                d="M35 105 C85 55 130 55 180 105 S280 155 330 105 S430 55 480 105 S580 155 630 105 S730 55 780 105 S880 155 930 105 S1030 55 1088 105"
+              />
+              <path
+                className="operation-road-dash"
+                d="M35 105 C85 55 130 55 180 105 S280 155 330 105 S430 55 480 105 S580 155 630 105 S730 55 780 105 S880 155 930 105 S1030 55 1088 105"
+              />
+            </svg>
+
+            {operationRouteSteps.map((step, index) => {
+              const position = roadmapLayout[index];
+              return (
+                <div
+                  className={`operation-vector-card is-${position.side}`}
+                  key={step}
+                  style={
+                    {
+                      "--x": `${position.x}%`,
+                      "--y": `${position.y}%`,
+                    } as CSSProperties
+                  }
+                >
+                  <div className="operation-vector-icon">
+                    <OperationStepIcon index={index} />
+                  </div>
+                  <strong>{step}</strong>
+                  <span aria-hidden="true" />
+                </div>
+              );
+            })}
+
+            {operationRouteSteps.map((step, index) => {
+              const position = roadmapLayout[index];
+              return (
+                <div
+                  className="operation-vector-number"
+                  key={`number-${step}`}
+                  style={
+                    {
+                      "--x": `${position.numberX}%`,
+                      "--y": `${position.numberY}%`,
+                    } as CSSProperties
+                  }
+                >
+                  {index + 1}
+                </div>
+              );
+            })}
+
+            {roadmapLayout.map((position, index) => (
+              <span
+                className={`operation-vector-stem is-${position.side}`}
+                key={`stem-${index}`}
+                style={
+                  {
+                    "--x": `${position.x}%`,
+                    "--y": `${position.side === "top" ? 33 : 62}%`,
+                  } as CSSProperties
+                }
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+        </div>
       </div>
+    </div>
+  );
+}
+
+function OrbitDiagram() {
+  return (
+    <div className="orbit-diagram orbit-diagram-image" data-reveal>
+      <Image
+        className="venn-image"
+        src="/mrt-venn-diagram-transparent.png"
+        alt="Diagrama de Venn com MRT na interseção entre agência, consultoria e equipe interna"
+        width={1503}
+        height={1047}
+      />
     </div>
   );
 }
@@ -551,6 +790,110 @@ function ResultsSection() {
   );
 }
 
+function SalesEngineVisual() {
+  return (
+    <div className="sales-engine-visual" aria-hidden="true">
+      <div className="engine-screen">
+        <div className="screen-top">
+          <span />
+          <span />
+          <span />
+        </div>
+        <div className="screen-chart">
+          <svg viewBox="0 0 210 92">
+            <path
+              d="M8 76 C38 72 45 56 71 54 C96 52 101 34 127 36 C158 38 164 18 202 15"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="7"
+            />
+            <circle cx="202" cy="15" r="7" fill="currentColor" />
+          </svg>
+        </div>
+        <div className="screen-metrics">
+          <span>Vendas</span>
+          <span>Mensagens</span>
+          <span>Anúncios</span>
+        </div>
+      </div>
+      <div className="engine-block">
+        <div className="gear gear-one" />
+        <div className="gear gear-two" />
+        <div className="engine-core">IA</div>
+      </div>
+      <div className="engine-lines">
+        <span />
+        <span />
+        <span />
+      </div>
+    </div>
+  );
+}
+
+function MethodRoad() {
+  const [activePhaseIndex, setActivePhaseIndex] = useState(
+    methodologyPhases.length - 1,
+  );
+
+  return (
+    <div className="method-road" data-reveal>
+      <div className="method-track">
+        <svg viewBox="0 0 1120 170" aria-hidden="true">
+          <path
+            className="method-road-shadow"
+            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
+          />
+          <path
+            className="method-road-body"
+            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
+          />
+          <path
+            className="method-road-dash"
+            d="M70 104 C252 40 342 42 475 88 C609 135 720 130 836 70 C930 22 1004 34 1050 64"
+          />
+        </svg>
+        {methodologyPhases.map((phase, index) => (
+          <button
+            type="button"
+            className={`method-track-pin method-track-pin-${index + 1} ${
+              index === activePhaseIndex ? "is-live" : ""
+            }`}
+            key={phase.name}
+            aria-label={`Selecionar fase ${phase.name}`}
+            onClick={() => setActivePhaseIndex(index)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+      <div className="method-road-cards">
+        {methodologyPhases.map((phase, index) => (
+          <article
+            className={`method-road-card ${
+              index === activePhaseIndex ? "is-live" : ""
+            }`}
+            key={phase.name}
+            onClick={() => setActivePhaseIndex(index)}
+          >
+            <span className="phase-label">{phase.name}</span>
+            <h3>{phase.label}</h3>
+            <span className="phase-time">{phase.time}</span>
+            <p>{phase.text}</p>
+            <div className="chip-row">
+              {phase.chips.map((chip) => (
+                <span className="chip" key={chip}>
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function MethodologySection() {
   return (
     <section className="section methodology-section" id="metodologia">
@@ -561,44 +904,18 @@ function MethodologySection() {
           text="Um pipeline claro para implantar, validar, otimizar e escalar a operação sem depender de improviso."
         />
 
-        <div className="timeline">
-          {methodologyPhases.map((phase, index) => (
-            <article className="phase-card" key={phase.name} data-reveal>
-              <div className="phase-index">0{index + 1}</div>
-              <div className="phase-body">
-                <span className="phase-label">{phase.name}</span>
-                <h3>{phase.label}</h3>
-                <span className="phase-time">{phase.time}</span>
-                <p>{phase.text}</p>
-                <div className="chip-row">
-                  {phase.chips.map((chip) => (
-                    <span className="chip" key={chip}>
-                      {chip}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+        <MethodRoad />
 
         <div className="tech-strip" data-reveal>
           <div>
+            <span className="lane-kicker">MRT Sales Engine</span>
             <h3>Operação apoiada por tecnologia própria</h3>
             <p>
-              A MRT utiliza tecnologia própria para acompanhar vendas,
-              mensagens, anúncios, indicadores e oportunidades de otimização. O
-              cliente tem mais clareza da operação, enquanto o time MRT executa
-              e acompanha a rotina.
+              Tecnologia própria para acompanhar vendas, mensagens, anúncios,
+              indicadores e oportunidades de otimização.
             </p>
           </div>
-          <div className="tech-grid">
-            {technologyCards.map((card) => (
-              <div className="tech-card" key={card}>
-                {card}
-              </div>
-            ))}
-          </div>
+          <SalesEngineVisual />
         </div>
       </div>
     </section>
@@ -606,9 +923,46 @@ function MethodologySection() {
 }
 
 function PricingSimulator() {
-  const [skuIndex, setSkuIndex] = useState(1);
-  const [channelIndex, setChannelIndex] = useState(1);
-  const plan = pricingPlans[Math.max(skuIndex, channelIndex)];
+  const [skuCount, setSkuCount] = useState(50);
+  const [channelCount, setChannelCount] = useState(5);
+  const skuMin = 10;
+  const skuMax = 100;
+  const channelMin = 1;
+  const channelMax = 10;
+  const skuMarks = [
+    { value: 10, label: "10" },
+    { value: 25, label: "25" },
+    { value: 50, label: "50" },
+    { value: 75, label: "75" },
+    { value: 100, label: "100+" },
+  ];
+  const channelMarks = [
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+    { value: 6, label: "6" },
+    { value: 7, label: "7" },
+    { value: 8, label: "8" },
+    { value: 9, label: "9" },
+    { value: 10, label: "10+" },
+  ];
+  const skuProgress = ((skuCount - skuMin) / (skuMax - skuMin)) * 100;
+  const channelProgress =
+    ((channelCount - channelMin) / (channelMax - channelMin)) * 100;
+  const planSkuCount = skuCount >= 100 ? 101 : skuCount;
+  const plan =
+    pricingPlans.find(
+      (item) =>
+        planSkuCount <= item.skuLimit && channelCount <= item.channelLimit,
+    ) ?? pricingPlans[pricingPlans.length - 1];
+  const skuDisplay = skuCount >= 100 ? "100+ SKUs" : `${skuCount} SKUs`;
+  const channelDisplay =
+    channelCount >= 10 ? "10+ canais" : `${channelCount} canais`;
+
+  const rangeStyle = (progress: number) =>
+    ({ "--range-progress": `${progress}%` }) as CSSProperties;
 
   return (
     <section className="section pricing-section" id="investimento">
@@ -624,29 +978,28 @@ function PricingSimulator() {
             <div className="control-group">
               <div className="control-head">
                 <label htmlFor="sku-range">Quantidade de SKUs</label>
-                <span className="control-value">{skuOptions[skuIndex]}</span>
+                <span className="control-value">{skuDisplay}</span>
               </div>
               <input
                 className="range-control"
                 id="sku-range"
                 type="range"
-                min="0"
-                max="2"
-                step="1"
-                value={skuIndex}
-                aria-valuetext={`${skuOptions[skuIndex]} SKUs`}
-                onChange={(event) => setSkuIndex(Number(event.target.value))}
+                min={skuMin}
+                max={skuMax}
+                step="10"
+                value={skuCount}
+                style={rangeStyle(skuProgress)}
+                aria-valuetext={skuDisplay}
+                onChange={(event) => setSkuCount(Number(event.target.value))}
               />
               <div className="range-ticks" aria-hidden="true">
-                {skuOptions.map((option, index) => (
-                  <button
-                    className={index === skuIndex ? "is-active" : ""}
-                    key={option}
-                    type="button"
-                    onClick={() => setSkuIndex(index)}
+                {skuMarks.map((mark) => (
+                  <span
+                    className={skuCount === mark.value ? "is-active" : ""}
+                    key={mark.value}
                   >
-                    {option}
-                  </button>
+                    {mark.label}
+                  </span>
                 ))}
               </div>
             </div>
@@ -654,33 +1007,30 @@ function PricingSimulator() {
             <div className="control-group">
               <div className="control-head">
                 <label htmlFor="channel-range">Canais / marketplaces</label>
-                <span className="control-value">
-                  {channelOptions[channelIndex]}
-                </span>
+                <span className="control-value">{channelDisplay}</span>
               </div>
               <input
                 className="range-control"
                 id="channel-range"
                 type="range"
-                min="0"
-                max="2"
+                min={channelMin}
+                max={channelMax}
                 step="1"
-                value={channelIndex}
-                aria-valuetext={`${channelOptions[channelIndex]} canais`}
+                value={channelCount}
+                style={rangeStyle(channelProgress)}
+                aria-valuetext={channelDisplay}
                 onChange={(event) =>
-                  setChannelIndex(Number(event.target.value))
+                  setChannelCount(Number(event.target.value))
                 }
               />
               <div className="range-ticks" aria-hidden="true">
-                {channelOptions.map((option, index) => (
-                  <button
-                    className={index === channelIndex ? "is-active" : ""}
-                    key={option}
-                    type="button"
-                    onClick={() => setChannelIndex(index)}
+                {channelMarks.map((mark) => (
+                  <span
+                    className={channelCount === mark.value ? "is-active" : ""}
+                    key={mark.value}
                   >
-                    {option}
-                  </button>
+                    {mark.label}
+                  </span>
                 ))}
               </div>
             </div>
@@ -1209,13 +1559,15 @@ export default function HomePage() {
               text="Criar conta e publicar produto é só o começo. O desafio real está em transformar marketplaces em uma rotina comercial previsível, com cadastro, preço, reputação, logística, campanha, atendimento e dados trabalhando juntos."
             />
             <div className="problem-grid">
-              {problemCards.map((card) => (
+              {problemCards.map((card, index) => (
                 <article
-                  className="premium-card problem-card"
+                  className={`premium-card problem-card problem-card-${index + 1}`}
                   key={card.title}
                   data-reveal
                 >
-                  <div className="line-mark" aria-hidden="true" />
+                  <div className="problem-icon" aria-hidden="true">
+                    <ProblemIcon index={index} />
+                  </div>
                   <h3>{card.title}</h3>
                   <p>{card.text}</p>
                 </article>
@@ -1243,14 +1595,7 @@ export default function HomePage() {
               text="A MRT é para empresas que têm produto, estoque e capacidade de entrega, mas querem transformar Mercado Livre, Amazon, Shopee e outros canais em uma operação estruturada, acompanhada e escalável."
             />
             <div className="audience-layout">
-              <div className="operation-statement" data-reveal>
-                <h3>Não somos uma agência. Somos a operação.</h3>
-                <p>
-                  Agências executam campanhas. Consultorias entregam
-                  diagnósticos. A MRT implanta, opera, acompanha e escala seus
-                  canais como um departamento terceirizado de marketplace.
-                </p>
-              </div>
+              <OrbitDiagram />
               <div className="comparison-grid">
                 {comparisonModels.map((model) => (
                   <article
