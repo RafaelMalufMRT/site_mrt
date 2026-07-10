@@ -1372,9 +1372,7 @@ function ContactSection({ whatsappUrl }: { whatsappUrl: string }) {
       setForm(initialFormState);
       setStatus({
         type: "success",
-        message:
-          result.message ??
-          "Diagnóstico enviado. A equipe MRT vai retornar em breve.",
+        message: "Diagnóstico enviado. A equipe MRT vai retornar em breve.",
       });
     } catch (error) {
       setStatus({
