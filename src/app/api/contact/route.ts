@@ -14,6 +14,11 @@ type ContactPayload = {
   message?: string;
 };
 
+type ResendErrorResponse = {
+  message?: string;
+  name?: string;
+};
+
 const requiredFields: Array<keyof ContactPayload> = [
   "name",
   "company",
@@ -127,12 +132,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${resendApiKey}`,
         "Content-Type": "application/json",
       },
+      signal: controller.signal,
       body: JSON.stringify({
         from: fromEmail,
         to: [contactEmail],
@@ -141,14 +149,29 @@ export async function POST(request: Request) {
         html: buildEmailHtml(payload),
       }),
     });
+    clearTimeout(timeout);
 
     if (!response.ok) {
+      const resendError = (await response.json().catch(() => null)) as
+        | ResendErrorResponse
+        | null;
+      console.error("Resend contact send failed", {
+        status: response.status,
+        message: resendError?.message,
+        name: resendError?.name,
+      });
+
       return NextResponse.json(
         { message: "Não foi possível enviar o e-mail agora." },
         { status: 502 },
       );
     }
-  } catch {
+  } catch (error) {
+    console.error("Contact send request failed", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      name: error instanceof Error ? error.name : "Unknown",
+    });
+
     return NextResponse.json(
       { message: "Não foi possível enviar o e-mail agora." },
       { status: 502 },
