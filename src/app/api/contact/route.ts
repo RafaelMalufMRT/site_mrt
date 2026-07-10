@@ -19,6 +19,11 @@ type ResendErrorResponse = {
   name?: string;
 };
 
+type Web3FormsResponse = {
+  success?: boolean;
+  message?: string;
+};
+
 const requiredFields: Array<keyof ContactPayload> = [
   "name",
   "company",
@@ -77,6 +82,23 @@ function buildEmailHtml(payload: Required<ContactPayload>) {
   `;
 }
 
+function buildEmailText(payload: Required<ContactPayload>) {
+  return [
+    "Novo diagnóstico MRT Marketplace",
+    "",
+    `Nome: ${payload.name}`,
+    `Empresa: ${payload.company}`,
+    `Cargo: ${payload.role || "Não informado"}`,
+    `E-mail: ${payload.email}`,
+    `WhatsApp: ${payload.whatsapp}`,
+    `Site: ${payload.site || "Não informado"}`,
+    `Quantidade aproximada de SKUs: ${payload.skuRange}`,
+    `Marketplaces de interesse: ${payload.marketplaces.join(", ")}`,
+    "",
+    `Mensagem: ${payload.message || "Não informada"}`,
+  ].join("\n");
+}
+
 export async function POST(request: Request) {
   let body: ContactPayload;
 
@@ -117,9 +139,60 @@ export async function POST(request: Request) {
 
   const contactEmail =
     process.env.CONTACT_EMAIL ?? "luciano@mrtmarketplace.com.br";
+  const web3FormsAccessKey = process.env.WEB3FORMS_ACCESS_KEY;
   const resendApiKey = process.env.RESEND_API_KEY;
   const fromEmail =
     process.env.CONTACT_FROM ?? "MRT Marketplace <onboarding@resend.dev>";
+
+  if (web3FormsAccessKey) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          access_key: web3FormsAccessKey,
+          subject: `Novo diagnóstico MRT - ${payload.company}`,
+          from_name: "MRT Marketplace",
+          name: payload.name,
+          email: payload.email,
+          message: buildEmailText(payload),
+        }),
+      });
+      clearTimeout(timeout);
+      const result = (await response.json().catch(() => null)) as
+        | Web3FormsResponse
+        | null;
+
+      if (!response.ok || result?.success === false) {
+        console.error("Web3Forms contact send failed", {
+          status: response.status,
+          message: result?.message,
+        });
+
+        return NextResponse.json(
+          { message: "Não foi possível enviar o e-mail agora." },
+          { status: 502 },
+        );
+      }
+
+      return NextResponse.json({
+        message: "Diagnóstico enviado. A equipe MRT vai retornar em breve.",
+      });
+    } catch (error) {
+      console.error("Web3Forms contact request failed", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        name: error instanceof Error ? error.name : "Unknown",
+      });
+
+      return NextResponse.json(
+        { message: "Não foi possível enviar o e-mail agora." },
+        { status: 502 },
+      );
+    }
+  }
 
   if (!resendApiKey) {
     return NextResponse.json(
