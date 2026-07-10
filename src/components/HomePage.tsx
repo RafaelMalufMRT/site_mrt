@@ -54,6 +54,23 @@ const skuRanges = [
   "Mais de 500 SKUs",
 ];
 
+function buildContactMessage(form: FormState) {
+  return [
+    "Novo diagnóstico MRT Marketplace",
+    "",
+    `Nome: ${form.name}`,
+    `Empresa: ${form.company}`,
+    `Cargo: ${form.role || "Não informado"}`,
+    `E-mail: ${form.email}`,
+    `WhatsApp: ${form.whatsapp}`,
+    `Site: ${form.site || "Não informado"}`,
+    `Quantidade aproximada de SKUs: ${form.skuRange}`,
+    `Marketplaces de interesse: ${form.marketplaces.join(", ")}`,
+    "",
+    `Mensagem: ${form.message || "Não informada"}`,
+  ].join("\n");
+}
+
 function ArrowIcon() {
   return (
     <svg className="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -1283,6 +1300,7 @@ function FaqSection() {
 
 function ContactSection({ whatsappUrl }: { whatsappUrl: string }) {
   const [form, setForm] = useState<FormState>(initialFormState);
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
   const [status, setStatus] = useState<{
     type: "idle" | "loading" | "success" | "error";
     message: string;
@@ -1326,17 +1344,28 @@ function ContactSection({ whatsappUrl }: { whatsappUrl: string }) {
     setStatus({ type: "loading", message: "Enviando diagnóstico..." });
 
     try {
-      const response = await fetch("/api/contact", {
+      if (!web3FormsAccessKey) {
+        throw new Error("Configuração de envio indisponível agora.");
+      }
+
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          access_key: web3FormsAccessKey,
+          subject: `Novo diagnóstico MRT - ${form.company}`,
+          from_name: "MRT Marketplace",
+          name: form.name,
+          email: form.email,
+          message: buildContactMessage(form),
+        }),
       });
       const contentType = response.headers.get("content-type") ?? "";
       const result = contentType.includes("application/json")
-        ? ((await response.json()) as { message?: string })
+        ? ((await response.json()) as { message?: string; success?: boolean })
         : { message: "Não foi possível acessar o envio agora." };
 
-      if (!response.ok) {
+      if (!response.ok || result.success === false) {
         throw new Error(result.message ?? "Não foi possível enviar agora.");
       }
 
