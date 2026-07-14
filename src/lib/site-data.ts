@@ -20,12 +20,12 @@ export const navLinks = [
 ];
 
 export const metrics = [
-  { value: "R$5M+", label: "vendidos pelos clientes operados" },
+  { value: "R$7M+", label: "vendidos pelos clientes operados" },
   { value: "10+", label: "marketplaces integrados" },
   { value: "100%", label: "operação terceirizada" },
   { value: "1.500+", label: "SKUs operados" },
   { value: "5.000+", label: "anúncios criados e otimizados" },
-  { value: "12+", label: "clientes ativos" },
+  { value: "20+", label: "clientes ativos" },
 ];
 
 export const problemCards = [
@@ -43,7 +43,7 @@ export const problemCards = [
   },
   {
     title: "O dono vira operador.",
-    text: "A indústria deveria focar em produto, estoque, qualidade e expedição, não em apagar incêndios de plataforma.",
+    text: "O dono deveria focar em estoque, qualidade e expedição, não em dominar o know-how de vendas online.",
   },
 ];
 
@@ -112,51 +112,52 @@ export const comparisonModels = [
 
 export const resultCases = [
   {
-    slug: "industria-pecas-automotivas",
-    sector: "Indústria de peças automotivas",
-    headline: "De operação inicial a R$100 mil/mês",
-    marketplaces: ["Mercado Livre", "Amazon", "Shopee"],
+    slug: "casa-decoracao-modelos-padrao",
+    sector: "Casa e Decoração",
+    headline: "De produção personalizada a R$87 mil/mês",
+    marketplaces: ["Mercado Livre", "Leroy Merlin"],
     period: "6 meses",
-    result: "R$100 mil/mês",
-    data: [2, 3, 12, 24, 48, 100],
+    result: "R$87.248,60/mês",
+    data: [75, 4312.5, 9872.6, 12864.7, 38613.6, 87248.6],
     problem:
-      "Empresa com bom portfólio e capacidade de entrega, mas sem operação estruturada em marketplaces.",
+      "A operação vendia produtos de forma muito personalizada, o que dificultava escala, padronização comercial e previsibilidade nos marketplaces.",
     solution:
-      "Implantação de canais, estruturação de catálogo, anúncios, SEO, campanhas e rotina de indicadores.",
+      "A MRT reorganizou a oferta em modelos padrão com maior procura, estruturou o catálogo e transformou a produção em uma linha mais simples de anunciar, comparar e vender.",
     caseResult:
-      "Operação saiu da fase inicial e atingiu mais de R$100 mil/mês em aproximadamente 6 meses.",
-    tractionTime: "Aproximadamente 6 meses",
+      "Com a padronização dos produtos e a operação orientada por dados, o canal saiu da validação inicial e chegou a R$87.248,60/mês em 6 meses.",
+    tractionTime: "4 meses",
   },
   {
-    slug: "fabricante-produtos-para-casa",
-    sector: "Fabricante de produtos para casa",
-    headline: "Crescimento progressivo após estruturação",
-    marketplaces: ["Mercado Livre", "Magalu", "Shopee"],
-    period: "6 meses",
-    result: "R$86 mil/mês",
-    data: [4, 9, 18, 31, 57, 86],
+    slug: "acessorios-automotivos-escala",
+    sector: "Acessórios automotivos",
+    headline: "De operação ativa a R$185 mil/mês",
+    marketplaces: ["Magalu", "Mercado Livre", "Shopee", "TikTok Shop"],
+    period: "8 meses",
+    result: "R$185.928,00/mês",
+    data: [10370, 44000, 48302, 95161, 125595, 135094, 165432, 185928],
     problem:
-      "Catálogo relevante, mas baixa presença digital e pouca padronização comercial.",
+      "A empresa já vendia online, mas ainda tinha pouca escala, baixa previsibilidade de crescimento e espaço para melhorar catálogo, anúncios e rotina comercial.",
     solution:
-      "Organização dos SKUs, criação de anúncios, precificação por canal e expansão gradual.",
+      "Foi aplicado o método MRT Sales Engine, combinando estruturação de anúncios, leitura de dados, otimização contínua e acompanhamento de performance por canal.",
     caseResult:
-      "Crescimento mês a mês após entrada em produção e otimização.",
-    tractionTime: "Entrada em tração gradual",
+      "A operação ganhou consistência em poucos ciclos e chegou a R$185.928,00/mês no oitavo mês acompanhado.",
+    tractionTime: "2 meses",
   },
   {
-    slug: "marca-consumo-recorrente",
-    sector: "Marca de consumo recorrente",
-    headline: "Escala por catálogo, SEO e campanhas",
-    marketplaces: ["Mercado Livre", "Amazon", "TikTok Shop"],
-    period: "6 meses",
-    result: "R$120 mil/mês",
-    data: [6, 11, 23, 39, 72, 120],
+    slug: "casa-decoracao-tendencia",
+    sector: "Casa e Decoração",
+    headline: "De tendência emergente a R$317 mil/mês",
+    marketplaces: ["Mercado Livre", "Shopee", "Leroy Merlin"],
+    period: "8 meses",
+    result: "R$317.161,00/mês",
+    data: [4312, 15432, 51328, 90324, 140324, 230589, 269034, 317161],
     problem:
-      "Produtos com recorrência, mas anúncios pouco otimizados e canais subutilizados.",
+      "O negócio precisava operar um mercado novo, ainda em fase de tendência, com desafios de adaptação logística e escala comercial.",
     solution:
-      "Melhoria de SEO/GEO, campanhas, expansão de catálogo e acompanhamento de conversão.",
-    caseResult: "Escala por dados, campanhas e rotina de gestão.",
-    tractionTime: "Aproximadamente 6 meses",
+      "A MRT ajustou a operação logística do produto, estruturou a presença nos canais e preparou o catálogo para capturar a demanda crescente com mais eficiência.",
+    caseResult:
+      "Com produto adequado à operação e gestão contínua dos canais, o case atingiu R$317.161,00/mês em 8 meses.",
+    tractionTime: "4 meses",
   },
 ];
 
@@ -266,7 +267,7 @@ export const faqs = [
   {
     question: "Para quem a MRT é indicada?",
     answer:
-      "Para indústrias e fabricantes que têm produto, estoque e capacidade de entrega, mas querem vender ou escalar em marketplaces sem montar uma equipe interna completa.",
+      "Para indústrias e importadores que têm produto, estoque e marca própria, mas querem vender ou escalar em marketplaces sem montar uma equipe interna completa.",
   },
   {
     question: "O que acontece na implantação?",

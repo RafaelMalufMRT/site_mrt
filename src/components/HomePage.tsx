@@ -71,6 +71,23 @@ function buildContactMessage(form: FormState) {
   ].join("\n");
 }
 
+function formatCurrencyCompact(value: number) {
+  if (value >= 1000) {
+    const amount = value / 1000;
+    const formatted = new Intl.NumberFormat("pt-BR", {
+      maximumFractionDigits: amount >= 100 ? 0 : 1,
+    }).format(amount);
+
+    return `R$ ${formatted} mil`;
+  }
+
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
 function ArrowIcon() {
   return (
     <svg className="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -346,10 +363,10 @@ function HeroDashboard() {
       <div className="dashboard-body">
         <div className="dash-kpis">
           {[
-            ["GMV", "R$ 120k"],
-            ["SKUs", "1.5k"],
-            ["Anúncios", "5k+"],
-            ["Canais", "10+"],
+            ["GMV", "R$ 500k"],
+            ["SKUs", "50"],
+            ["Anúncios", "320"],
+            ["Canais", "5"],
           ].map(([label, value]) => (
             <div className="dash-kpi" key={label}>
               <span>{label}</span>
@@ -701,7 +718,7 @@ function ResultChart({ data, slug }: { data: number[]; slug: string }) {
       onMouseMove={onMove}
       onMouseLeave={() => setActiveIndex(null)}
     >
-      <title>Gráfico de crescimento em seis meses</title>
+      <title>Gráfico de crescimento mensal</title>
       <defs>
         <linearGradient id={`area-${slug}`} x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="#1247C8" stopOpacity="0.2" />
@@ -767,18 +784,18 @@ function ResultChart({ data, slug }: { data: number[]; slug: string }) {
         />
         <circle cx={activeX} cy={activeY} r="6" fill="#1247C8" />
         <rect
-          x={Math.min(Math.max(activeX - 40, 8), width - 88)}
+          x={Math.min(Math.max(activeX - 49, 8), width - 106)}
           y={Math.max(activeY - 42, 4)}
-          width="80"
+          width="98"
           height="28"
           rx="6"
         />
         <text
-          x={Math.min(Math.max(activeX, 48), width - 48)}
+          x={Math.min(Math.max(activeX, 57), width - 57)}
           y={Math.max(activeY - 24, 22)}
           textAnchor="middle"
         >
-          R${data[active]} mil
+          {formatCurrencyCompact(data[active])}
         </text>
       </g>
     </svg>
@@ -902,11 +919,13 @@ function MethodologySection() {
 
         <div className="tech-strip" data-reveal>
           <div>
-            <span className="lane-kicker">MRT Sales Engine</span>
-            <h3>Operação apoiada por tecnologia própria</h3>
+            <h3>MRT SALES ENGINE</h3>
             <p>
-              Tecnologia própria para acompanhar vendas, mensagens, anúncios,
-              indicadores e oportunidades de otimização.
+              Operamos com sistema próprio, otimizado para criação de anúncios,
+              SEO, GEO, big data e uso massivo de Inteligência Artificial: o
+              MRT SALES ENGINE. Essa tecnologia é o que nos permite escalar a
+              operação com qualidade, gerar anúncios de alta performance e
+              otimizar continuamente os resultados com base em dados.
             </p>
           </div>
           <SalesEngineVisual />
@@ -918,18 +937,18 @@ function MethodologySection() {
 
 function PricingSimulator() {
   const [skuCount, setSkuCount] = useState(50);
-  const [channelCount, setChannelCount] = useState(5);
+  const [channelCount, setChannelCount] = useState(3);
   const skuMin = 5;
   const skuMax = 100;
   const channelMin = 1;
-  const channelMax = 10;
+  const channelMax = 5;
   const skuMarks = [
     { value: 5, label: "5" },
     { value: 100, label: "100+" },
   ];
   const channelMarks = [
     { value: 1, label: "1" },
-    { value: 10, label: "10+" },
+    { value: 5, label: "5+" },
   ];
   const skuProgress = ((skuCount - skuMin) / (skuMax - skuMin)) * 100;
   const channelProgress =
@@ -938,7 +957,7 @@ function PricingSimulator() {
     skuCount >= 100 ? 100 : Math.max(skuMin, Math.ceil(skuCount / 5) * 5);
   const planSkuCount = roundedSkuCount >= 100 ? 101 : roundedSkuCount;
   const planChannelCount =
-    channelCount >= 10 ? 11 : Math.max(channelMin, Math.ceil(channelCount));
+    channelCount >= 5 ? 6 : Math.max(channelMin, Math.ceil(channelCount));
   const plan =
     pricingPlans.find(
       (item) =>
@@ -948,7 +967,7 @@ function PricingSimulator() {
   const skuDisplay =
     roundedSkuCount >= 100 ? "100+ SKUs" : `${roundedSkuCount} SKUs`;
   const channelDisplay =
-    channelCount >= 10 ? "10+ canais" : `${planChannelCount} canais`;
+    channelCount >= 5 ? "5+ canais" : `${planChannelCount} canais`;
 
   const rangeStyle = (progress: number) =>
     ({ "--range-progress": `${progress}%` }) as CSSProperties;
@@ -1581,7 +1600,7 @@ function Footer({ whatsappUrl }: { whatsappUrl: string }) {
               width={164}
               height={26}
             />
-            <p>Outsourcing de Marketplace para indústrias e fabricantes.</p>
+            <p>Outsourcing de Marketplace para indústrias e importadores.</p>
           </div>
           <div className="footer-column">
             <h3>Navegação</h3>
@@ -1656,7 +1675,7 @@ export default function HomePage() {
               </p>
               <div className="hero-actions">
                 <a className="btn btn-primary" href="#contato">
-                  Agendar diagnóstico <ArrowIcon />
+                  Mais informações <ArrowIcon />
                 </a>
                 <a
                   className="btn btn-secondary"
@@ -1668,7 +1687,7 @@ export default function HomePage() {
                 </a>
               </div>
               <p className="hero-note">
-                Para indústrias e fabricantes que querem transformar marketplace
+                Para indústrias e importadores que querem transformar marketplace
                 em um canal real de vendas.
               </p>
             </div>
@@ -1718,8 +1737,8 @@ export default function HomePage() {
           <div className="container">
             <SectionHead
               eyebrow="Para quem é"
-              title="Feito para indústrias e fabricantes que querem vender mais sem montar uma operação interna de marketplace."
-              text="A MRT é para empresas que têm produto, estoque e capacidade de entrega, mas querem transformar Mercado Livre, Amazon, Shopee e outros canais em uma operação estruturada, acompanhada e escalável."
+              title="Feito para indústrias e importadores que querem vender mais sem montar uma operação interna de marketplace."
+              text="A MRT é para indústrias e importadores que têm produto, estoque, marca própria e capacidade de entrega, mas querem transformar Mercado Livre, Amazon, Shopee e outros canais em uma operação estruturada, acompanhada e escalável."
             />
             <div className="audience-layout">
               <OrbitDiagram />

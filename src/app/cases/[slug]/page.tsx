@@ -13,6 +13,24 @@ type CaseGrowthChartProps = {
   slug: string;
 };
 
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: value % 1 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+}
+
+function splitResultLabel(result: string) {
+  const [amount] = result.split("/");
+
+  return {
+    amount,
+    unit: "",
+  };
+}
+
 function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
   const width = 760;
   const height = 360;
@@ -38,6 +56,12 @@ function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
   const firstPoint = points[0];
   const lastPoint = points[points.length - 1];
   const areaPath = `${linePath} L ${lastPoint.x} ${baseline} L ${firstPoint.x} ${baseline} Z`;
+  const calloutWidth = 190;
+  const calloutX = Math.min(
+    Math.max(lastPoint.x - calloutWidth - 18, padding.left),
+    width - padding.right - calloutWidth,
+  );
+  const calloutY = Math.max(lastPoint.y - 64, padding.top);
 
   return (
     <div className="case-growth-chart">
@@ -108,9 +132,10 @@ function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
         />
 
         {points.map((point, index) => {
+          const tooltipWidth = 132;
           const tooltipX = Math.min(
-            Math.max(point.x - 54, padding.left),
-            width - padding.right - 108,
+            Math.max(point.x - tooltipWidth / 2, padding.left),
+            width - padding.right - tooltipWidth,
           );
           const tooltipY = Math.max(point.y - 62, padding.top);
 
@@ -147,12 +172,12 @@ function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
                 <rect
                   x={tooltipX}
                   y={tooltipY}
-                  width="108"
+                  width={tooltipWidth}
                   height="44"
                   rx="10"
                 />
                 <text
-                  x={tooltipX + 54}
+                  x={tooltipX + tooltipWidth / 2}
                   y={tooltipY + 18}
                   textAnchor="middle"
                 >
@@ -160,11 +185,11 @@ function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
                 </text>
                 <text
                   className="case-chart-tooltip-value"
-                  x={tooltipX + 54}
+                  x={tooltipX + tooltipWidth / 2}
                   y={tooltipY + 33}
                   textAnchor="middle"
                 >
-                  R${point.value} mil
+                  {formatCurrency(point.value)}
                 </text>
               </g>
             </g>
@@ -184,17 +209,17 @@ function CaseGrowthChart({ data, result, slug }: CaseGrowthChartProps) {
 
         <g className="case-chart-final-callout">
           <rect
-            x={Math.max(lastPoint.x - 172, padding.left)}
-            y={Math.max(lastPoint.y - 64, padding.top)}
-            width="154"
+            x={calloutX}
+            y={calloutY}
+            width={calloutWidth}
             height="42"
             rx="10"
             fill="#FFF5E3"
             stroke="#F2C66E"
           />
           <text
-            x={Math.max(lastPoint.x - 95, padding.left + 77)}
-            y={Math.max(lastPoint.y - 39, padding.top + 25)}
+            x={calloutX + calloutWidth / 2}
+            y={calloutY + 25}
             fill="#A96800"
             fontSize="13"
             fontWeight="800"
@@ -236,6 +261,8 @@ export default async function CaseDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const resultLabel = splitResultLabel(caseItem.result);
+
   return (
     <main className="case-detail">
       <header className="case-topbar">
@@ -270,7 +297,10 @@ export default async function CaseDetailPage({ params }: PageProps) {
         <div className="case-proof-card">
           <div className="case-proof-copy">
             <span>Resultado observado</span>
-            <h2>{caseItem.result}</h2>
+            <h2 className="case-result-label">
+              {resultLabel.unit ? <small>{resultLabel.unit}</small> : null}
+              <span>{resultLabel.amount}</span>
+            </h2>
             <p>
               Evolução em {caseItem.period}, com implantação, catálogo,
               anúncios, campanhas e rotina de indicadores trabalhando juntos.

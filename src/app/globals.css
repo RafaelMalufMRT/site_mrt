@@ -2187,15 +2187,15 @@ h3 {
 
 .case-detail-hero h1 {
   max-width: 860px;
-  font-size: clamp(2.5rem, 6vw, 5.2rem);
-  line-height: 0.95;
+  font-size: clamp(2.45rem, 5vw, 4.35rem);
+  line-height: 1.02;
 }
 
 .case-detail-hero .lead {
   max-width: 760px;
-  margin-top: 22px;
+  margin-top: 20px;
   color: var(--mrt-muted);
-  font-size: 1.12rem;
+  font-size: 1.08rem;
   line-height: 1.7;
 }
 
@@ -2208,7 +2208,7 @@ h3 {
 
 .case-proof-card {
   display: grid;
-  grid-template-columns: minmax(280px, 0.55fr) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 0.48fr) minmax(0, 1fr);
   gap: 22px;
   border: 1px solid rgba(18, 71, 200, 0.16);
   border-radius: 8px;
@@ -2225,7 +2225,7 @@ h3 {
   flex-direction: column;
   justify-content: center;
   border-radius: 8px;
-  padding: 30px;
+  padding: 28px;
   background:
     linear-gradient(145deg, rgba(18, 71, 200, 0.96), rgba(7, 42, 98, 0.98)),
     var(--mrt-navy);
@@ -2241,16 +2241,39 @@ h3 {
 }
 
 .case-proof-copy h2 {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
   margin-top: 16px;
   color: #ffffff;
-  font-size: clamp(2.7rem, 6vw, 5.8rem);
-  line-height: 0.92;
+  line-height: 1.02;
+}
+
+.case-result-label span {
+  min-width: 0;
+  max-width: 100%;
+  color: #ffffff;
+  font-size: clamp(2rem, 2.8vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.case-result-label small {
+  display: block;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.78rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .case-proof-copy p {
-  margin-top: 18px;
+  margin-top: 16px;
   color: rgba(255, 255, 255, 0.76);
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.62;
 }
 
 .case-channel-list {
@@ -2390,24 +2413,38 @@ h3 {
 .case-detail-aside {
   border: 1px solid var(--mrt-line);
   border-radius: 8px;
-  padding: 32px;
+  padding: 34px;
   background: #ffffff;
 }
 
 .case-detail-main {
   display: grid;
-  gap: 28px;
+  gap: 24px;
 }
 
 .case-detail-main section {
   display: grid;
-  gap: 10px;
+  gap: 12px;
+  border-bottom: 1px solid var(--mrt-line);
+  padding-bottom: 24px;
+}
+
+.case-detail-main section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.case-detail-main h2 {
+  color: var(--mrt-navy);
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.14;
 }
 
 .case-detail-main p,
 .case-detail-aside p {
   color: var(--mrt-muted);
-  line-height: 1.7;
+  font-size: 1.02rem;
+  line-height: 1.76;
 }
 
 .case-detail-aside {
