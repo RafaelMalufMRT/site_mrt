@@ -19,9 +19,18 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: "/site.webmanifest?v=20260716",
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/favicon.ico?v=20260716", sizes: "any" },
+      { url: "/favicon.svg?v=20260716", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png?v=20260716", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png?v=20260716", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png?v=20260716", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: [{ url: "/favicon.ico?v=20260716" }],
   },
 };
 
