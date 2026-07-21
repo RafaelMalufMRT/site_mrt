@@ -1294,24 +1294,28 @@ h3 {
 
 .plan-notes {
   display: grid;
-  gap: 10px;
-  margin-top: 18px;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 0.82rem;
-  line-height: 1.55;
+  gap: 8px;
+  margin: -4px 0 24px;
+  border: 1px solid rgba(233, 154, 0, 0.24);
+  border-radius: 8px;
+  padding: 15px 16px 15px 18px;
+  background:
+    linear-gradient(90deg, rgba(233, 154, 0, 0.16), transparent 46%),
+    rgba(255, 255, 255, 0.065);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .plan-notes p {
   margin: 0;
 }
 
-.plan-notes .plan-note-primary {
-  border: 1px solid rgba(233, 154, 0, 0.22);
-  border-radius: 8px;
-  padding: 12px 14px;
-  background: rgba(233, 154, 0, 0.1);
-  color: rgba(255, 255, 255, 0.86);
-  font-weight: 700;
+.plan-final-note {
+  margin-top: 16px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.82rem;
+  line-height: 1.55;
 }
 
 .cases-section {

@@ -88,6 +88,10 @@ function formatCurrencyCompact(value: number) {
   }).format(value);
 }
 
+function parseCurrencyValue(value: string) {
+  return Number(value.replace(/[^\d]/g, ""));
+}
+
 function ArrowIcon() {
   return (
     <svg className="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -968,6 +972,10 @@ function PricingSimulator() {
     roundedSkuCount >= 100 ? "100+ SKUs" : `${roundedSkuCount} SKUs`;
   const channelDisplay =
     channelCount >= 5 ? "5+ canais" : `${planChannelCount} canais`;
+  const includedGmv = parseCurrencyValue(plan.monthly) / 0.03;
+  const includedGmvDisplay = formatCurrencyCompact(
+    Math.floor(includedGmv / 10000) * 10000,
+  );
 
   const rangeStyle = (progress: number) =>
     ({ "--range-progress": `${progress}%` }) as CSSProperties;
@@ -1058,20 +1066,24 @@ function PricingSimulator() {
                 <strong>{plan.monthly}</strong>
               </div>
             </div>
-            <a className="btn btn-primary" href="#contato">
-              Solicitar diagnóstico desse cenário <ArrowIcon />
-            </a>
-            <div className="plan-notes">
-              <p className="plan-note-primary">
+            <div className="plan-notes" aria-label="Condições comerciais">
+              <p>
+                Esse valor cobre operações até {includedGmvDisplay}/mês em GMV.
+                Acima desse volume, o gerenciamento passa a ser 3% sobre o GMV
+                mensal.
+              </p>
+              <p>
                 O gerenciamento contínuo começa apenas após a conclusão e
                 aprovação formal da implantação.
               </p>
-              <p>
-                O investimento final depende do diagnóstico, complexidade
-                operacional, marketplaces escolhidos e estágio atual da empresa.
-                Valores podem ser diferentes após diagnóstico.
-              </p>
             </div>
+            <a className="btn btn-primary" href="#contato">
+              Solicitar diagnóstico desse cenário <ArrowIcon />
+            </a>
+            <p className="plan-final-note">
+              O investimento final depende do diagnóstico, complexidade
+              operacional, marketplaces escolhidos e estágio atual da empresa.
+            </p>
           </div>
         </div>
       </div>
